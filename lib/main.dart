@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterlab/pages/contact.dart';
 import 'package:flutterlab/pages/gallery.dart';
 import 'package:flutterlab/pages/home.dart';
+import 'package:flutterlab/pages/popup/profile.dart';
 import 'package:flutterlab/pages/popup/settings.dart';
 
 void main() {
@@ -47,6 +48,12 @@ class _HomePageState extends State<HomePage> {
         break;
       case "Profile":
         debugPrint("Profile");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Profile(),
+          ),
+        );
         break;
     }
   }

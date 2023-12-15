@@ -43,7 +43,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  image_path: "assets/images/ic_logo.png"
+  image_path: "assets/images/yusuf_rizal_logo.png"
   android: true
   
   # The "flutter_lints" package below contains a set of recommended lints to
