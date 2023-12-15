@@ -22,7 +22,7 @@ class _ProfileState extends State<Profile> {
               title: Text("MyProfile"),
               centerTitle: false,
               background: Image(
-                image: AssetImage("images/sliverappbar_bg.jpg"),
+                image: AssetImage("assets/images/sliverappbar_bg.jpg"),
                 fit: BoxFit.cover,
               ),
             ),
