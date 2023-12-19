@@ -32,12 +32,14 @@ class _ContactState extends State<Contact> {
               ],
               validator: (val) {
                 if (!val!.isValidName) return "Enter valid name!";
+                return null;
               },
             ),
             CustomFormField(
               hintText: "Enter your email address",
               validator: (val) {
                 if (!val!.isValidEmail) return "Enter valid email address!";
+                return null;
               },
             ),
             CustomFormField(
@@ -51,6 +53,7 @@ class _ContactState extends State<Contact> {
                 if (!val!.isValidPhone) {
                   return 'Minimal 10 & Maximal 12 Digits!';
                 }
+                return null;
               },
             ),
             CustomFormField(
@@ -59,6 +62,7 @@ class _ContactState extends State<Contact> {
                   if (!val!.isValidPassword) {
                     return "Minimal 8 & Maximal 16 Characters!";
                   }
+                  return null;
                 }),
             ElevatedButton(
               onPressed: () {

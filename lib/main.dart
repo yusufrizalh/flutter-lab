@@ -3,6 +3,7 @@ import 'package:flutterlab/intro.dart';
 import 'package:flutterlab/pages/contact.dart';
 import 'package:flutterlab/pages/gallery.dart';
 import 'package:flutterlab/pages/home.dart';
+import 'package:flutterlab/pages/login.dart';
 import 'package:flutterlab/pages/popup/profile.dart';
 import 'package:flutterlab/pages/popup/settings.dart';
 import 'package:flutterlab/pages/popup/timeline.dart';
@@ -80,9 +81,9 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> widgetDrawerMenu = <Widget>[
     Expanded(child: Home()),
     Expanded(child: Gallery()),
-    // Text("Contact", style: simpleTextStyle),
     Expanded(child: Contact()),
     Text("About", style: simpleTextStyle),
+    Expanded(child: Login(title: "Login Page")),
   ];
 
   void onItemDrawerTap(int index) {
@@ -195,6 +196,15 @@ class _HomePageState extends State<HomePage> {
               selected: selectedDrawerIndex == 3,
               onTap: () {
                 onItemDrawerTap(3);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("Login"),
+              leading: const Icon(Icons.person),
+              selected: selectedDrawerIndex == 4,
+              onTap: () {
+                onItemDrawerTap(4);
                 Navigator.pop(context);
               },
             ),
