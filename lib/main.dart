@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutterlab/intro.dart';
 import 'package:flutterlab/pages/contact.dart';
 import 'package:flutterlab/pages/gallery.dart';
 import 'package:flutterlab/pages/home.dart';
 import 'package:flutterlab/pages/popup/profile.dart';
 import 'package:flutterlab/pages/popup/settings.dart';
+import 'package:flutterlab/pages/popup/timeline.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +23,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
         primarySwatch: Colors.red,
       ),
-      home: const HomePage(title: "Flutter Lab"),
+      // home: const HomePage(title: "Flutter Lab"),
+      home: Intro(),
     );
   }
 }
@@ -52,6 +55,15 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(
             builder: (context) => const Profile(),
+          ),
+        );
+        break;
+      case "Timeline":
+        debugPrint("Timeline");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Timeline(),
           ),
         );
         break;
@@ -94,7 +106,7 @@ class _HomePageState extends State<HomePage> {
           PopupMenuButton(
             onSelected: handleSelectedMenu,
             itemBuilder: (context) {
-              return {"Settings", "Profile"}.map((String choice) {
+              return {"Settings", "Profile", "Timeline"}.map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
