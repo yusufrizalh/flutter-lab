@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterlab/main.dart';
+import 'package:flutterlab/pages/components/products/product_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  final String title;
+  const Dashboard({super.key, required this.title});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -29,7 +31,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Dashboard"),
+        title: Text(widget.title),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -44,9 +46,19 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("Dashboard"),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ProductList(title: "Product List",))),
+              child: Text("Open Product List"),
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          debugPrint("Add Product");
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

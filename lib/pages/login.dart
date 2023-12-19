@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutterlab/pages/components/dashboard.dart';
+import 'package:flutterlab/pages/components/products/product_list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,7 +43,9 @@ class _LoginState extends State<Login> {
             visible = false;
           });
           Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => Dashboard(),
+            builder: (context) => ProductList(
+              title: "Product List",
+            ),
           ));
         } else {
           setState(() {
