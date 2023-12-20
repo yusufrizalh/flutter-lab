@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2023 at 12:03 AM
+-- Generation Time: Dec 20, 2023 at 05:49 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -57,8 +57,22 @@ INSERT INTO `products` (`id`, `name`, `price`, `description`, `createdAt`, `upda
 (16, 'NEW PRODUCT ARRIVAL 20500', '2000000.00', 'NULL', '2023-09-21 06:31:59', NULL),
 (17, 'PRODUCT 500100', '7900000.00', 'Loem ipsum door', '2023-09-21 06:34:40', NULL),
 (18, 'PRODUCT 001001 NEW', '6599000.00', '', '2023-09-21 06:39:23', '2023-09-21 06:46:10'),
-(19, 'I-TEL S23 NEWEST', '1299000.00', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa massa ultricies mi quis hendrerit. Faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget. Cursus euismod quis viverra nibh cras pulvinar mattis nunc. In fermentum posuere urna nec tincidunt praesent. Morbi tristique senectus et netus et. Vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Sed tempus urna et pharetra pharetra massa massa. Dictum varius duis at consectetur lorem donec.', '2023-09-21 06:56:54', NULL),
-(20, 'OASE - EARBUD HEADPHONES TWS KT11 SERIES', '379000.00', 'Purus sit amet luctus venenatis lectus magna fringilla urna. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Feugiat in fermentum posuere urna nec. Sed libero enim sed faucibus turpis. Eget lorem dolor sed viverra ipsum. Eget aliquet nibh praesent tristique magna sit amet. Vitae et leo duis ut diam quam nulla porttitor massa.', '2023-09-21 07:09:43', '2023-09-22 02:01:18');
+(19, 'I-TEL S23 NEWEST 2023', '1299000.00', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Massa massa ultricies mi quis hendrerit. Faucibus vitae aliquet nec ullamcorper sit amet risus nullam eget. Cursus euismod quis viverra nibh cras pulvinar mattis nunc. In fermentum posuere urna nec tincidunt praesent. Morbi tristique senectus et netus et. Vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Sed tempus urna et pharetra pharetra massa massa. Dictum varius duis at consectetur lorem donec.', '2023-09-21 06:56:54', '2023-12-20 13:00:37'),
+(20, 'OASE - EARBUD HEADPHONES TWS KT11 SERIES', '379000.00', 'Purus sit amet luctus venenatis lectus magna fringilla urna. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Feugiat in fermentum posuere urna nec. Sed libero enim sed faucibus turpis. Eget lorem dolor sed viverra ipsum. Eget aliquet nibh praesent tristique magna sit amet. Vitae et leo duis ut diam quam nulla porttitor massa.', '2023-09-21 07:09:43', '2023-09-22 02:01:18'),
+(21, 'New Product 101010', '6579000.00', 'NULL', '2023-12-20 12:56:13', '2023-12-20 13:38:05'),
+(22, 'Standart Product ABC', '7699000.00', '', '2023-12-20 13:44:51', '2023-12-20 13:49:24'),
+(23, 'My Product 200', '3789000.00', 'Lorem', '2023-12-20 13:45:44', NULL),
+(24, 'My Product 201', '6569000.00', 'Lorem', '2023-12-20 13:46:36', '2023-12-20 13:49:41'),
+(25, 'My Product 202', '3399000.00', 'Lorem', '2023-12-20 13:47:23', '2023-12-20 13:49:53'),
+(26, 'My Product 203', '2779000.00', 'Lorem', '2023-12-20 13:49:01', '2023-12-20 13:50:03'),
+(27, 'Product XYZ 1', '1299000.00', 'Lorem ipsum', '2023-12-20 13:51:57', '2023-12-20 13:57:21'),
+(28, 'Product XYZ 2', '7689000.00', 'Lorem ipsum', '2023-12-20 13:57:02', '2023-12-20 13:57:33'),
+(29, 'Product XYZ 3', '1299000.00', 'Lorem ipsum', '2023-12-20 13:59:21', '2023-12-20 14:07:55'),
+(30, 'Product XYZ 4', '5499000.00', 'Lorem ipsum', '2023-12-20 14:07:12', '2023-12-20 14:08:05'),
+(31, 'Product XYZ 5', '2879000.00', 'Lorem ipsum', '2023-12-20 14:07:23', '2023-12-20 14:08:16'),
+(32, 'Simple Product', '5499000.00', 'Lorem ipsum dolor sit amet', '2023-12-20 14:10:27', NULL),
+(33, 'YES PLEASE 1001', '5699000.00', 'yes please product top', '2023-12-20 16:42:33', NULL),
+(34, 'NAH Project 2877400', '639000.00', 'Testing description ', '2023-12-20 16:44:48', NULL);
 
 --
 -- Indexes for dumped tables
@@ -78,7 +92,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
