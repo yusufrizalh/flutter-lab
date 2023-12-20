@@ -37,24 +37,15 @@ class _ProductListState extends State<ProductList> {
     }
   }
 
-  late GlobalKey<ScaffoldState> scaffoldKey;
-
   @override
   void initState() {
     super.initState();
-    scaffoldKey = GlobalKey();
     getProductList().then((data) {
       setState(() {
         productSearch = data;
         productList = productSearch;
       });
     });
-  }
-
-  @override
-  void dispose() {
-    scaffoldKey.currentState!.dispose();
-    super.dispose();
   }
 
   userLogout() async {
@@ -70,7 +61,6 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
       appBar: AppBar(
         title: Text("Product List"),
         centerTitle: true,
@@ -82,29 +72,30 @@ class _ProductListState extends State<ProductList> {
           ),
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(12),
-            child: TextField(
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                hintText: "Search product name",
-                suffixIcon: Icon(Icons.search),
+      body: RefreshIndicator(
+        strokeWidth: 5,
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(12),
+              child: TextField(
+                textInputAction: TextInputAction.search,
+                decoration: InputDecoration(
+                  hintText: "Search product name",
+                  suffixIcon: Icon(Icons.search),
+                ),
+                onChanged: (keyword) {
+                  setState(() {
+                    productList = productSearch
+                        .where((productFound) => productFound["name"]
+                            .toLowerCase()
+                            .contains(keyword.toLowerCase()))
+                        .toList();
+                  });
+                },
               ),
-              onChanged: (keyword) {
-                setState(() {
-                  productList = productSearch
-                      .where((productFound) => productFound["name"]
-                          .toLowerCase()
-                          .contains(keyword.toLowerCase()))
-                      .toList();
-                });
-              },
             ),
-          ),
-          Expanded(
-            child: RefreshIndicator(
+            Expanded(
               child: ListView.builder(
                 physics: AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -118,49 +109,93 @@ class _ProductListState extends State<ProductList> {
                     ),
                     elevation: 8,
                     margin: EdgeInsets.all(8),
-                    child: ListTile(
-                      leading: Icon(Icons.numbers),
-                      title: Text(
-                        productList[position]["name"].toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Dismissible(
+                      key: Key("position_${productList[position]["id"]}"),
+                      background: Container(
+                        color: Colors.blue,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Icon(Icons.edit, color: Colors.white),
+                            ),
+                            Text('Edit', style: TextStyle(color: Colors.white)),
+                          ],
+                        ),
                       ),
-                      subtitle: Text(productList[position]["price"].toString()),
+                      secondaryBackground: Container(
+                        color: Colors.red,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Text('Delete',
+                                style: TextStyle(color: Colors.white)),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 12.0),
+                              child: Icon(Icons.delete, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      onDismissed: (direction) {
+                        if (direction == DismissDirection.endToStart) {
+                          // delete
+                        } else if (direction == DismissDirection.startToEnd) {
+                          // edit
+                        }
+                      },
+                      confirmDismiss: (direction) async {
+                        if (direction == DismissDirection.endToStart) {
+                          // return await showDeleteConfirm(context);
+                        }
+                        return true;
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.numbers),
+                        title: Text(
+                          productList[position]["name"].toString(),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle:
+                            Text(productList[position]["price"].toString()),
+                      ),
                     ),
                   );
                 },
               ),
-              onRefresh: () {
-                return Future.delayed(
-                  Duration(seconds: 3),
-                  () {
-                    setState(() {
-                      getProductList().then((data) {
-                        setState(() {
-                          productSearch = data;
-                          productList = productSearch;
-                        });
-                      });
-                    });
-                    final mySnackbar = SnackBar(
-                      content: const Text("Success to refresh data"),
-                      backgroundColor: Colors.red,
-                      elevation: 0,
-                      margin: const EdgeInsets.all(12),
-                      behavior: SnackBarBehavior.floating,
-                      showCloseIcon: true,
-                      closeIconColor: Colors.white,
-                      dismissDirection: DismissDirection.up,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      duration: const Duration(seconds: 3),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(mySnackbar);
-                  },
-                );
-              },
             ),
-          ),
-        ],
+          ],
+        ),
+        onRefresh: () {
+          return Future.delayed(
+            Duration(seconds: 3),
+            () {
+              setState(() {
+                getProductList().then((data) {
+                  setState(() {
+                    productSearch = data;
+                    productList = productSearch;
+                  });
+                });
+              });
+              final mySnackbar = SnackBar(
+                content: const Text("Success to refresh data"),
+                backgroundColor: Colors.red,
+                elevation: 0,
+                margin: const EdgeInsets.all(12),
+                behavior: SnackBarBehavior.floating,
+                showCloseIcon: true,
+                closeIconColor: Colors.white,
+                dismissDirection: DismissDirection.up,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                duration: const Duration(seconds: 3),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(mySnackbar);
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
