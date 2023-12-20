@@ -220,7 +220,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: () => debugPrint("Add Something"),
         onPressed: () {
           final mySnackbar = SnackBar(
             content: const Text("Flash message here by snackbar"),

@@ -1,5 +1,9 @@
+import 'package:confirm_dialog/confirm_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterlab/main.dart';
+import 'package:flutterlab/pages/components/apis/models/product_model.dart';
+import 'package:flutterlab/pages/components/products/product_create.dart';
+import 'package:flutterlab/pages/components/products/product_detail.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
@@ -7,6 +11,7 @@ import '../apis/baseurl.dart';
 
 class ProductList extends StatefulWidget {
   final String title;
+
   ProductList({super.key, required this.title});
 
   @override
@@ -17,6 +22,7 @@ class _ProductListState extends State<ProductList> {
   final String apiUrl = "${BaseUrl.base_url}/getAllProducts.php";
   List<dynamic> productList = [];
   List<dynamic> productSearch = [];
+  final productModel = ProductModel();
 
   getProductList() async {
     try {
@@ -56,6 +62,32 @@ class _ProductListState extends State<ProductList> {
         builder: (context) => HomePage(title: "Home Page"),
       ),
     );
+  }
+
+  showDeleteConfirm(BuildContext context) async {
+    if (await confirm(
+      context,
+      title: Text("Confirm"),
+      content: Text("Are you sure to delete?"),
+      textOK: Text("Yes"),
+      textCancel: Text("Cancel"),
+    )) {
+      return debugPrint("DELETED");
+    }
+    return debugPrint("CANCELED");
+  }
+
+  showEditConfirm(BuildContext context) async {
+    if (await confirm(
+      context,
+      title: Text("Confirm"),
+      content: Text("Are you sure to edit?"),
+      textOK: Text("Yes"),
+      textCancel: Text("Cancel"),
+    )) {
+      return debugPrint("EDITED");
+    }
+    return debugPrint("CANCELED");
   }
 
   @override
@@ -138,16 +170,21 @@ class _ProductListState extends State<ProductList> {
                           ],
                         ),
                       ),
-                      onDismissed: (direction) {
-                        if (direction == DismissDirection.endToStart) {
-                          // delete
-                        } else if (direction == DismissDirection.startToEnd) {
-                          // edit
-                        }
-                      },
+                      // onDismissed: (direction) async {
+                      //   if (direction == DismissDirection.endToStart) {
+                      //     // delete
+                      //     // return await showDeleteConfirm(context);
+                      //   } else if (direction == DismissDirection.startToEnd) {
+                      //     // edit
+                      //   }
+                      // },
                       confirmDismiss: (direction) async {
                         if (direction == DismissDirection.endToStart) {
-                          // return await showDeleteConfirm(context);
+                          // delete
+                          return await showDeleteConfirm(context);
+                        } else if (direction == DismissDirection.startToEnd) {
+                          // edit
+                          return await showEditConfirm(context);
                         }
                         return true;
                       },
@@ -157,8 +194,17 @@ class _ProductListState extends State<ProductList> {
                           productList[position]["name"].toString(),
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        subtitle:
-                            Text(productList[position]["price"].toString()),
+                        subtitle: Text(
+                          productList[position]["price"].toString(),
+                        ),
+                        onTap: () => debugPrint("Detail product"),
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => ProductDetail(
+                        //       productModel: productList[position],
+                        //     ),
+                        //   ),
+                        // ),
                       ),
                     ),
                   );
@@ -200,6 +246,8 @@ class _ProductListState extends State<ProductList> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           debugPrint("Add Product");
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => ProductCreate()));
         },
         child: Icon(Icons.add),
       ),
