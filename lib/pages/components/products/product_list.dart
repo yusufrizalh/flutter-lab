@@ -37,15 +37,24 @@ class _ProductListState extends State<ProductList> {
     }
   }
 
+  late GlobalKey<ScaffoldState> scaffoldKey;
+
   @override
   void initState() {
     super.initState();
+    scaffoldKey = GlobalKey();
     getProductList().then((data) {
       setState(() {
         productSearch = data;
         productList = productSearch;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    scaffoldKey.currentState!.dispose();
+    super.dispose();
   }
 
   userLogout() async {
@@ -61,6 +70,7 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text("Product List"),
         centerTitle: true,
@@ -94,26 +104,58 @@ class _ProductListState extends State<ProductList> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(4),
-              itemCount: productList.length,
-              itemBuilder: (context, position) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: BorderSide(color: Colors.grey.shade200),
-                  ),
-                  elevation: 8,
-                  margin: EdgeInsets.all(8),
-                  child: ListTile(
-                    leading: Icon(Icons.numbers),
-                    title: Text(
-                      productList[position]["name"].toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+            child: RefreshIndicator(
+              child: ListView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: EdgeInsets.all(4),
+                itemCount: productList.length,
+                itemBuilder: (context, position) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(color: Colors.grey.shade200),
                     ),
-                    subtitle: Text(productList[position]["price"].toString()),
-                  ),
+                    elevation: 8,
+                    margin: EdgeInsets.all(8),
+                    child: ListTile(
+                      leading: Icon(Icons.numbers),
+                      title: Text(
+                        productList[position]["name"].toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(productList[position]["price"].toString()),
+                    ),
+                  );
+                },
+              ),
+              onRefresh: () {
+                return Future.delayed(
+                  Duration(seconds: 3),
+                  () {
+                    setState(() {
+                      getProductList().then((data) {
+                        setState(() {
+                          productSearch = data;
+                          productList = productSearch;
+                        });
+                      });
+                    });
+                    final mySnackbar = SnackBar(
+                      content: const Text("Success to refresh data"),
+                      backgroundColor: Colors.red,
+                      elevation: 0,
+                      margin: const EdgeInsets.all(12),
+                      behavior: SnackBarBehavior.floating,
+                      showCloseIcon: true,
+                      closeIconColor: Colors.white,
+                      dismissDirection: DismissDirection.up,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      duration: const Duration(seconds: 3),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(mySnackbar);
+                  },
                 );
               },
             ),

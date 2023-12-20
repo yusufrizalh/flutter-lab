@@ -24,8 +24,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: false,
         primarySwatch: Colors.red,
       ),
-      // home: const HomePage(title: "Flutter Lab"),
-      home: Intro(),
+      home: const HomePage(title: "Flutter Lab"),
+      // home: Intro(),
     );
   }
 }
